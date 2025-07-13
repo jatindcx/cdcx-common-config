@@ -2,14 +2,13 @@ package config
 
 import (
 	"log"
-	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 )
 
 func LoadConfig() {
-	err := godotenv.Load()
+	err := godotenv.Load("./app.env")
 	if err != nil {
 		log.Println(".env file not found, skipping...")
 	}
