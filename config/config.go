@@ -1,23 +1,28 @@
 package config
 
 import (
-	"log"
 
-	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 )
 
-func LoadConfig() {
-	err := godotenv.Load("./app.env")
-	if err != nil {
-		log.Println(".env file not found, skipping...")
-	}
+type Environment string
 
+const (
+	Development Environment = "development"
+)
+
+func LoadConfig(filePath string, fileName string) (err error) {
+	viper.SetDefault("ENV", Development)
+	viper.SetConfigName(fileName)
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath(filePath)
 	viper.AutomaticEnv()
 
-	viper.SetDefault("APP_NAME", "DefaultApp")
-	viper.SetDefault("PORT", "3000")
-	viper.SetDefault("DEBUG", false)
+	err = viper.ReadInConfig()
+	if _, ok := err.(viper.ConfigFileNotFoundError); err != nil && !ok {
+		return
+	}
+	return
 }
 
 func GetString(key string) string {
