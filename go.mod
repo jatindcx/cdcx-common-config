@@ -1,4 +1,4 @@
-module github.com/jatindcx/cdcx-commong-config
+module github.com/jatindcx/cdcx-common-config
 
 go 1.24.5
 
